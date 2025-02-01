@@ -30,4 +30,14 @@ async function createFaq(question,answer){
     
 
 }
-module.exports = { getFaqs, createFaq };
+async function getTranslatedFaq(id,lang){
+    const f= await faq.findById(id);
+    const newfaq=f.translatedtext(lang)
+    newfaq._id=f._id
+    return newfaq;
+}
+async function deleteFaq(id){
+    await faq.findByIdAndDelete(id);
+}
+
+module.exports = { getFaqs, createFaq , getTranslatedFaq, deleteFaq};
