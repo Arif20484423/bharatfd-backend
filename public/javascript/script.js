@@ -1,16 +1,16 @@
-let question;
-let answer;
+let questionField;
+let answerField;
 
 ClassicEditor.create(document.getElementById("question"))
   .then((editor) => {
-    question = editor;
+    questionField = editor;
   })
   .catch((error) => {
     console.log(error);
   });
 ClassicEditor.create(document.getElementById("answer"))
   .then((editor) => {
-    answer = editor;
+    answerField = editor;
   })
   .catch((error) => {
     console.log(error);
@@ -20,10 +20,23 @@ function stripHTML(html) {
   return doc.body.textContent || "";
 }
 function create() {
-  console.log(stripHTML(question.getData()));
+    const question= stripHTML(questionField.getData());
+    const answer= stripHTML(answerField.getData());
+    const data=JSON.stringify({question:question,answer:answer});
+    console.log(data)
+    fetch("http://localhost:3000/api/createfaq",{
+        method:"POST",
+        body:data,
+        headers:{
+            "Content-Type":"application/json",
+        }
+    }).then((res)=>{
+        addfaqs()
+    })  
 }
 
 async function addfaqs() {
+    console.log("adding")
   const faqdoc = document.getElementById("faqlist");
   const resen = await fetch("http://localhost:3000/api/faqs");
   const dataen = await resen.json();

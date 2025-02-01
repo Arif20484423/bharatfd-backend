@@ -1,5 +1,6 @@
 const faq = require("../models/faq");
-async function getfaqs(lang) {
+const {translateQnA}= require("../services/translate")
+async function getFaqs(lang) {
   if (lang === "en") {
     const data = await faq.find({}, "question answer");
     return data;
@@ -14,5 +15,19 @@ async function getfaqs(lang) {
     return faqs;
   }
 }
+async function createFaq(question,answer){
+    const faqCreated=await faq({
+        question:question,
+        answer:answer,
+        translations:{}
+    })
+    const lang=["hi","bn"]
+    for(let i =0; i<lang.length;i++){
+        const trans= await translateQnA(question,answer,lang[i]);
+        faqCreated.translations.set(lang[i],trans)
+    }   
+    await faqCreated.save();
+    
 
-module.exports = { getfaqs };
+}
+module.exports = { getFaqs, createFaq };
