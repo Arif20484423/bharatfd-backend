@@ -1,18 +1,40 @@
 const faq = require("../models/faq");
+
 const {translateQnA}= require("../services/translate")
+const Redis= require("redis")
+const redisClient= Redis.createClient();
+redisClient.connect()
+const redisExpiration=3600;
 async function getFaqs(lang) {
+    
   if (lang === "en") {
-    const data = await faq.find({}, "question answer");
-    return data;
+    const redisfaqs=await redisClient.get("faqs")
+    if(redisfaqs){
+        return JSON.parse(redisfaqs)
+    }
+    else{
+        const data = await faq.find({}, "question answer");
+        redisClient.setEx("faqs",redisExpiration,JSON.stringify(data))
+        return data;    
+    }
+    
   } else {
-    const data = await faq.find();
+    const redisfaqs=await redisClient.get(`faqs${lang}`)
+    if(redisfaqs){
+        return JSON.parse(redisfaqs)
+    }
+    else{
+        const data = await faq.find();
     const faqs = [];
     data.forEach((d) => {
       if (d.translations && d.translations.get(lang)) {
         faqs.push(d.translations.get(lang));
       }
     });
+    redisClient.setEx(`faqs${lang}`,redisExpiration,JSON.stringify(faqs));
     return faqs;
+    }
+    
   }
 }
 async function createFaq(question,answer){
