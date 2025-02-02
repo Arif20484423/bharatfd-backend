@@ -6,26 +6,32 @@
 ├── backend/  
 │   ├── controllers/  
 │   │   ├── faqcontroller.js      # faq crud operations  
-│   │   └── redis.js         # Redis connection  
-│   ├── controllers/
-│   │   └── faqController.js # FAQ CRUD operations
-│   ├── models/
-│   │   └── Faq.js          # FAQ MongoDB model
+│   ├── db/  
+│   │   └── connectdb.js          #Connect to database  
+│   ├── models/  
+│   │   └── faq.js          # FAQ MongoDB model    
+│   ├── public/  
+│   └──  javascript/  
+│   │   |    └── adminscript.js          # admin ejs javascript file  
+│   │   |    └── userscript.js          # user ejs javascript file  
+│   └──  stylesheet/   
+│   │   |    └── styles.css             # styles for ejs files  
 │   ├── routes/
-│   │   └── faqRoutes.js    # API routes
-│   ├── middleware/
-│   │   ├── cache.js        # Redis caching
-│   │   └── validator.js    # Input validation
+│   │   └── index.js    # API routes
 │   ├── services/
-│   │   └── translationService.js # Translation API integration
-│   └── app.js              # Express app setup
-├── tests/
-│   └── faq.test.js        # Unit tests
-├── .env                    # Environment variables
-├── .gitignore
-├── package.json
-├── Dockerfile
-└── docker-compose.yml
+│   │   └── config/
+│   |   │   └── translatekey.json      # translate api key.json file to be updated     
+│   │   └── translate.js                # text translation operations    
+├── ├── tests/  
+│   |   └── faq.test.js        # Unit tests  
+├── .dockerignore                    # Docker ignore files  
+├── .env                    # Environment variables  
+├── .gitignore  
+├── app.js                  #  server\  
+├── docker-compose.yml  
+├── Dockerfile  
+├── package.json  
+├── package-lock.json  
 
 
 
