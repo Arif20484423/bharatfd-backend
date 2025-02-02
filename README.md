@@ -3,10 +3,10 @@
  ## Directory Structure
 
 
-├── backend/
-│   ├── controllers/
-│   │   ├── faqcontroller.js      # faq crud operations
-│   │   └── redis.js         # Redis connection
+├── backend/  
+│   ├── controllers/  
+│   │   ├── faqcontroller.js      # faq crud operations  
+│   │   └── redis.js         # Redis connection  
 │   ├── controllers/
 │   │   └── faqController.js # FAQ CRUD operations
 │   ├── models/
