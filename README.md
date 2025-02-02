@@ -1,6 +1,6 @@
  A Node.js-based FAQ management system with multilingual support, caching, and WYSIWYG editor capabilities.
 
- ##Directory Structure
+ ## Directory Structure
 
 
 ├── backend/
@@ -26,3 +26,6 @@
 ├── package.json
 ├── Dockerfile
 └── docker-compose.yml
+
+
+
