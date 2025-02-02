@@ -4,7 +4,7 @@ const {
   getFaqs,
   createFaq,
   getTranslatedFaq,
-  deleteFaq
+  deleteFaq,
 } = require("../controllers/faqcontroller");
 const faq = require("../models/faq");
 router.get("/", async (req, res) => {
@@ -15,15 +15,15 @@ router.get("/admin", async (req, res) => {
 });
 
 router.get("/api/faqs", async (req, res) => {
-  const params = req.query;
+  const { updated, lang } = req.query;
   let data;
-  if (params.lang) {
-    data = await getFaqs(params.lang);
+  if (lang) {
+    data = await getFaqs(lang, updated ? updated : false);
   } else {
-    data = await getFaqs("en");
+    data = await getFaqs("en", updated ? updated : false);
   }
-  
-  res.send(data)
+
+  res.send(data);
 });
 router.post("/api/createfaq", async (req, res) => {
   const { question, answer } = req.body;
@@ -38,9 +38,9 @@ router.post("/api/gettranslation", async (req, res) => {
 });
 
 router.delete("/api/deletefaq", async (req, res) => {
-    const { id } = req.body;
-    await deleteFaq(id)
-    res.status(200).send({ status: 200,message:"faq deleted" });
-  });
-  
+  const { id } = req.body;
+  await deleteFaq(id);
+  res.status(200).send({ status: 200, message: "faq deleted" });
+});
+
 module.exports = router;

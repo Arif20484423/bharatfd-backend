@@ -1,5 +1,6 @@
 let questionField;
 let answerField;
+
 ClassicEditor.create(document.getElementById("question"))
   .then((editor) => {
     questionField = editor;
@@ -36,7 +37,7 @@ function create() {
 
 async function addfaqs() {
   const faqdoc = document.getElementById("faqlist");
-  const resen = await fetch("http://localhost:3000/api/faqs");
+  const resen = await fetch("http://localhost:3000/api/faqs?updated=true");
   const dataen = await resen.json();
 
   let html = "";
